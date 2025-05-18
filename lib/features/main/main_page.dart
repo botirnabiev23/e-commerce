@@ -96,6 +96,15 @@ class _MainPageState extends State<MainPage> {
                           ),
                           label: 'Basket',
                         ),
+                        BottomNavigationBarItem(
+                          icon: CustomBottomNavIcon(
+                            imagePath: 'assets/images/menu.svg',
+                            isSelected: _selectedIndex ==
+                                BottomNavigationItem.area.index,
+                            padding: const EdgeInsets.only(bottom: 6, top: 8),
+                          ),
+                          label: 'Area',
+                        ),
                       ],
                     ),
                   ),
@@ -111,5 +120,6 @@ class _MainPageState extends State<MainPage> {
 
 enum BottomNavigationItem {
   home,
-  basket;
+  basket,
+  area;
 }

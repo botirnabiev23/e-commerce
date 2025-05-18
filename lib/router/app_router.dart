@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:market_place/core/di/injection.dart';
+import 'package:market_place/features/area/presentation/pages/area_page.dart';
 import 'package:market_place/features/basket/presentation/blocs/basket/basket_bloc.dart';
 import 'package:market_place/features/basket/presentation/pages/basket_page.dart';
 import 'package:market_place/features/home/presentation/pages/meals_page.dart';
@@ -31,6 +32,15 @@ final router = GoRouter(
               path: AppRoutes.basket.path,
               name: AppRoutes.basket.name,
               builder: (_, state) => const BasketPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRoutes.area.path,
+              name: AppRoutes.area.name,
+              builder: (_, state) => const AreaPage(),
             ),
           ],
         ),

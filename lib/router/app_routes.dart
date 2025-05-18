@@ -1,7 +1,8 @@
 enum AppRoutes {
   home('home', '/home'),
   basket('basket', '/basket'),
-  main('main', '/main');
+  main('main', '/main'),
+  area('area', '/area');
 
   final String name;
   final String path;

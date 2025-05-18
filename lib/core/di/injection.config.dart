@@ -16,6 +16,18 @@ import 'package:market_place/core/di/register_modules.dart' as _i112;
 import 'package:market_place/db/app_database.dart' as _i961;
 import 'package:market_place/db/dao/meals_dao.dart' as _i418;
 import 'package:market_place/db/dao/meals_dao_impl.dart' as _i677;
+import 'package:market_place/features/area/data/data_sources/remote_area_datasource.dart'
+    as _i525;
+import 'package:market_place/features/area/data/repositories/area_repository_impl.dart'
+    as _i715;
+import 'package:market_place/features/area/domain/repositories/area_repository.dart'
+    as _i543;
+import 'package:market_place/features/area/domain/use_cases/get_area_use_case.dart'
+    as _i282;
+import 'package:market_place/features/area/domain/use_cases/get_meals_by_are_use_case.dart'
+    as _i60;
+import 'package:market_place/features/area/presentation/blocs/bloc/area_bloc.dart'
+    as _i664;
 import 'package:market_place/features/basket/data/data_sources/local/basket_local_data_source.dart'
     as _i157;
 import 'package:market_place/features/basket/data/data_sources/local/basket_local_data_source_impl.dart'
@@ -76,6 +88,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i677.MealsDaoImpl(gh<_i961.AppDatabase>()));
     gh.lazySingleton<_i157.BasketLocalDataSource>(
         () => _i64.BasketLocalDataSourceImpl(gh<_i418.MealsDao>()));
+    gh.lazySingleton<_i525.RemoteAreaDataSource>(
+        () => _i525.RemoteAreaDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i581.BasketRepository>(
         () => _i720.BasketRepositoryImpl(gh<_i157.BasketLocalDataSource>()));
     gh.lazySingleton<_i119.MealRemoteDataSource>(
@@ -110,6 +124,16 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i429.ClearMealsUseCase>(),
           gh<_i272.DecrementMealUseCase>(),
           gh<_i136.WatchAllBasketMealsUseCase>(),
+        ));
+    gh.lazySingleton<_i543.AreaRepository>(
+        () => _i715.AreaRepositoryImpl(gh<_i525.RemoteAreaDataSource>()));
+    gh.factory<_i282.GetAreasUseCase>(
+        () => _i282.GetAreasUseCase(gh<_i543.AreaRepository>()));
+    gh.factory<_i60.GetMealsByAreaUseCase>(
+        () => _i60.GetMealsByAreaUseCase(gh<_i543.AreaRepository>()));
+    gh.factory<_i664.AreaBloc>(() => _i664.AreaBloc(
+          gh<_i282.GetAreasUseCase>(),
+          gh<_i60.GetMealsByAreaUseCase>(),
         ));
     return this;
   }

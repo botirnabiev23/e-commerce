@@ -9,11 +9,24 @@ abstract class RegisterModule {
   Future<AppDatabase> get database async => AppDatabase();
 
   @lazySingleton
-  Dio dio() => Dio(
-        BaseOptions(
-          connectTimeout: const Duration(seconds: 15),
-          receiveTimeout: const Duration(seconds: 15),
-          contentType: 'application/json',
-        ),
-      );
+  Dio dio() {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: 'https://www.themealdb.com/api/json/v1/1/', // ✅ Указан базовый URL
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 15),
+        contentType: 'application/json',
+      ),
+    );
+
+    dio.interceptors.add(LogInterceptor(
+      request: true,
+      requestBody: true,
+      responseBody: true,
+      responseHeader: false,
+      requestHeader: false,
+    ));
+
+    return dio;
+  }
 }
